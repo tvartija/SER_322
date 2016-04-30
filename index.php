@@ -15,13 +15,20 @@
       $host = 'localhost';
       $port = 8889;
 
-      $link = mysql_connect(
+      $connect = mysql_connect(
          "$host:$port", 
          $user, 
          $password
-      ); 
-    ?>
+      );
 
+      $db = mysql_select_db('mysql');
+
+      $query = "SELECT * FROM books";
+
+      $result = mysql_query( $query );
+      
+    ?>
+    
   </head>
   <body>
     <nav class="navbar navbar-inverse">
@@ -81,6 +88,35 @@
         <button type="button" class="btn btn-danger">Add Function Here</button>
       </div>
       <!-- end buttons -->
+
+      <!-- Example of building a table off a SQL query -->
+      <div class="row">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <td>ProductID</td>
+            <td>Edition</td>
+            <td>Stock</td>
+          </thead>
+          <tbody>
+            <?php
+              // fetch each record in result set
+              // Loop through each row in DB
+              for ( $counter = 0; $row = mysql_fetch_row( $result );
+                $counter++ )
+              {
+                // build table to display results
+                echo( "<tr>" );
+
+                // Loop through each column
+                foreach ( $row as $key => $value )
+                  echo( "<td>$value</td>" );
+
+                echo( "</tr>" );
+              } // end for
+            ?><!-- end PHP script -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>
