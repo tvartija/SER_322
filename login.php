@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	$user = 'root';
 	$password = 'root';
 	$db = 'book_inventory';
@@ -18,10 +19,21 @@
 	$result=$mysqli->query("$query");
 	$row=$result->fetch_assoc();
 	if(password_verify("$userPassword",$row["Password"])){
-		echo "Successful login";
+		echo $_SESSION['loggedin'];
+		$_SESSION['loggedin']="YES";
+		$name=$row['Name'];
+		$_SESSION['name']="$name";
+		$url = "Location: welcome.php";
+		header("$url");
+		exit;
 	}
 	else{
 		echo "Invalid";
+		$_SESSION['loggedin']="NO";
+		$_SESSION['name']="";
+		$url = "Location: index.php";
+		header("$url");
+		exit;
 	}
 	
 ?>

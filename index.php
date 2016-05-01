@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+?>
 <html>
   <head>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -6,32 +9,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <link href="style.css" rel="stylesheet" media="all" />
-
-    <!-- connect to MySQL DB -->
-    <?php
-		$user = 'root';
-		$password = 'root';
-		$db = 'book_inventory';
-		$host = 'localhost';
-		$port = 8889;
-
-		//$connect = mysql_connect(
-		//   "$host:$port", 
-		//   $user, 
-		//  $password
-		//);
-		
-		//$db = mysql_select_db('mysql');
-		$mysqli = new mysqli("$host","$user","$password","$db","$port");
-		if($mysqli->connect_errno){
-			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
-		}
-		//echo $mysqli->host_info . "\n";
-		$query = "SELECT * FROM book";
-		//$result = mysql_query( $query );
-		$result=$mysqli->query("$query");
-      
-    ?>
     
   </head>
   <body>

@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	$user = 'root';
 	$password = 'root';
 	$db = 'book_inventory';
