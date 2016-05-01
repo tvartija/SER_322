@@ -9,9 +9,9 @@
 
     <!-- connect to MySQL DB -->
     <?php
-      $user = 'root';
-      $password = 'root';
-      $db = 'inventory';
+      $user = 'book_inv_user';
+      $password = 'user123';
+      $db = 'book_inventory';
       $host = 'localhost';
       $port = 8889;
 
