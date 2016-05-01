@@ -9,23 +9,27 @@
 
     <!-- connect to MySQL DB -->
     <?php
-      $user = 'book_inv_user';
-      $password = 'user123';
-      $db = 'book_inventory';
-      $host = 'localhost';
-      $port = 8889;
+		$user = 'root';
+		$password = 'root';
+		$db = 'book_inventory';
+		$host = 'localhost';
+		$port = 8889;
 
-      $connect = mysql_connect(
-         "$host:$port", 
-         $user, 
-         $password
-      );
-
-      $db = mysql_select_db('mysql');
-
-      $query = "SELECT * FROM books";
-
-      $result = mysql_query( $query );
+		//$connect = mysql_connect(
+		//   "$host:$port", 
+		//   $user, 
+		//  $password
+		//);
+		
+		//$db = mysql_select_db('mysql');
+		$mysqli = new mysqli("$host","$user","$password","$db","$port");
+		if($mysqli->connect_errno){
+			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
+		}
+		//echo $mysqli->host_info . "\n";
+		$query = "SELECT * FROM book";
+		//$result = mysql_query( $query );
+		$result=$mysqli->query("$query");
       
     ?>
     
@@ -101,7 +105,7 @@
             <?php
               // fetch each record in result set
               // Loop through each row in DB
-              for ( $counter = 0; $row = mysql_fetch_row( $result );
+              for ( $counter = 0; $row = $result->fetch_row();
                 $counter++ )
               {
                 // build table to display results
