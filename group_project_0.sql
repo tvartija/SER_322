@@ -30,7 +30,7 @@ UNIQUE (TitleID)
 
 CREATE TABLE IF NOT EXISTS book_inventory.book
 (
-ProductID BIGINT(10), 
+ProductID BIGINT(10), AUTO_INCREMENT, 
 Stock INT, 
 Edition VARCHAR(5),
 TitleID BIGINT(10),
@@ -86,4 +86,15 @@ INSERT INTO title VALUE(9780425240335,
 0000000004,'The Hunt for Red October', 'Tom Clancy', 'Berkley Books', "1984-10-01", 7);
 
 INSERT INTO title VALUE(9780425170349, 
-0000000004,'Rainbow Six', 'Tom Clancy', 'Berkley Books', "1998-08-01", 7);
+0000000005,'Rainbow Six', 'Tom Clancy', 'Berkley Books', "1998-08-01", 7);
+
+INSERT INTO book VALUE(null,5,2,0000000001,9.99);
+INSERT INTO book VALUE(null,1,2,0000000002,9.99);
+INSERT INTO book VALUE(null,100,2,0000000003,9.99);
+INSERT INTO book VALUE(null,2,4,0000000004,14.99);
+INSERT INTO book VALUE(null,0,1,0000000005,14.99);
+
+INSERT INTO consumer VALUE(123654789,null,'Roger Wilco','123 Main St.','123 Main St.','timetravler@gmail.com');
+INSERT INTO consumer VALUE(165487111,null,'Larry Loveless','500 32nd Way','P.O. Box 223','leisuresuit@yahoo.com');
+INSERT INTO consumer VALUE(888792114,null,'Duke Nukem','453 Post Apocalyptic St.','33 Planet Gone Circle','rocketlaunch@live.com');
+
