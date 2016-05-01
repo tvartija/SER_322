@@ -24,9 +24,21 @@
 	$result=$mysqli->query("$query");
 	if($result){
 		echo("Account Creation Successful");
+		echo $_SESSION['loggedin'];
+		$_SESSION['loggedin']="YES";
+		$_SESSION['name']="$userName";
+		$url = "Location: welcome.php";
+		header("$url");
+		exit;
 	}
 	else{
 		echo("Account Creation Failed");
+		echo $_SESSION['loggedin'];
+		$_SESSION['loggedin']="No";
+		$_SESSION['name']="";
+		$url = "Location: index.php";
+		header("$url");
+		exit;
 	}
 	
 ?>

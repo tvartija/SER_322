@@ -21,11 +21,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">BookStore</a>
+          <a class="navbar-brand" href="index.php">BookStore</a>
         </div> 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="welcome.php">Home</a></li>
             <li><a href="#">Help</a></li>
           </ul>
         </div>
