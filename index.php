@@ -76,9 +76,44 @@
         </form>
       </div>
       <!-- end form -->
+	  
+	  <!-- Setup Account -->
+      <div class="row">
+        <h1>Setup Account</h1>
+      </div>
+      <!-- end title -->
 
-
-
+      <!-- Login form -->
+      <div class="row">
+        <form action="signup.php" method="POST">
+		  <div class="form-group">
+            <label for="userName">Name</label>
+            <input type="textfield" class="form-control" id="userName" name="userName" placeholder="Name">
+          </div>
+		  <div class="form-group">
+            <label for="userShippingAddress">Shipping Address</label>
+            <input type="textfield" class="form-control" id="userShippingAddress" name="userShippingAddress" placeholder="Shipping Address">
+          </div>
+		  <div class="form-group">
+            <label for="userBillingAddress">Billing Address</label>
+            <input type="textfield" class="form-control" id="userBillingAddress" name="userBillingAddress" placeholder="Billing Address">
+          </div>
+		  <div class="form-group">
+            <label for="userDriversLicense">Drivers License</label>
+            <input type="textfield" class="form-control" id="userDriversLicense" name="userDriversLicense" placeholder="Drivers License">
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email address</label>
+            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-default">Login</button>
+        </form>
+      </div>
+      <!-- end form -->
     </div>
   </body>
 </html>
