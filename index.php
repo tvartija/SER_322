@@ -44,13 +44,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Brand</a>
+          <a class="navbar-brand" href="#">BookStore</a>
         </div> 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
+            <li><a href="#">Help</a></li>
           </ul>
         </div>
       </div>
@@ -58,69 +57,28 @@
     <div class="container">
       <!-- Page Title -->
       <div class="row">
-        <h1>Hello, World</h1>
+        <h1>Enter Login Information</h1>
       </div>
       <!-- end title -->
 
-      <!-- Example of a form -->
+      <!-- Login form -->
       <div class="row">
-        <form>
+        <form action="login.php" method="POST">
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="userEmail">Email address</label>
+            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email">
           </div>
           <div class="form-group">
-            <p class="help-block">Example block-level help text here.</p>
+            <label for="userPassword">Password</label>
+            <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
           </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"> Check me out
-            </label>
-          </div>
+          <button type="submit" class="btn btn-default">Login</button>
         </form>
       </div>
       <!-- end form -->
 
-      <!-- example of buttons -->
-      <div class="row">
-        <button type="button" class="btn btn-default">I'm a button</button>
-        <button type="button" class="btn btn-primary">Button</button>
-        <button type="button" class="btn btn-danger">Add Function Here</button>
-      </div>
-      <!-- end buttons -->
 
-      <!-- Example of building a table off a SQL query -->
-      <div class="row">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <td>ProductID</td>
-            <td>Edition</td>
-            <td>Stock</td>
-          </thead>
-          <tbody>
-            <?php
-              // fetch each record in result set
-              // Loop through each row in DB
-              for ( $counter = 0; $row = $result->fetch_row();
-                $counter++ )
-              {
-                // build table to display results
-                echo( "<tr>" );
 
-                // Loop through each column
-                foreach ( $row as $key => $value )
-                  echo( "<td>$value</td>" );
-
-                echo( "</tr>" );
-              } // end for
-            ?><!-- end PHP script -->
-          </tbody>
-        </table>
-      </div>
     </div>
   </body>
 </html>

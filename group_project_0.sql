@@ -48,8 +48,10 @@ CustID BIGINT AUTO_INCREMENT,
 Name VARCHAR(30),
 ShippingAddress VARCHAR(40),
 BillingAddress VARCHAR(40),
-Email VARCHAR(20),
-PRIMARY KEY(CustID) 
+Email VARCHAR(30),
+Password VARCHAR(70),
+PRIMARY KEY(CustID),
+UNIQUE(Email)
 );
 
 CREATE TABLE IF NOT EXISTS book_inventory.transactions
@@ -94,7 +96,7 @@ INSERT INTO book_inventory.book VALUE(null,100,2,0000000003,9.99);
 INSERT INTO book_inventory.book VALUE(null,2,4,0000000004,14.99);
 INSERT INTO book_inventory.book VALUE(null,0,1,0000000005,14.99);
 
-INSERT INTO book_inventory.consumer VALUE(123654789,null,'Roger Wilco','123 Main St.','123 Main St.','timetravler@gmail.com');
-INSERT INTO book_inventory.consumer VALUE(165487111,null,'Larry Loveless','500 32nd Way','P.O. Box 223','leisuresuit@yahoo.com');
-INSERT INTO book_inventory.consumer VALUE(888792114,null,'Duke Nukem','453 Post Apocalyptic St.','33 Planet Gone Circle','rocketlaunch@live.com');
+INSERT INTO book_inventory.consumer VALUE(123654789,null,'Roger Wilco','123 Main St.','123 Main St.','timetravler@gmail.com','$2y$10$pgB4fOq/DPuHJEeKsdt5muvRzDvLMsRh1GP3XKuseTYm7..BOLKrW');
+INSERT INTO book_inventory.consumer VALUE(165487111,null,'Larry Loveless','500 32nd Way','P.O. Box 223','leisuresuit@yahoo.com','$2y$10$954oHaZjALfaLb.XGrr71uoxLD2o0KtI2XhuSIxSI9Vw9meXdSxc.');
+INSERT INTO book_inventory.consumer VALUE(888792114,null,'Duke Nukem','453 Post Apocalyptic St.','33 Planet Gone Circle','rocketlaunch@live.com','$2y$10$EvAWCabRE9PMfVg9Jw0uou2e4jHWqQvMURotiS9bWO/3bjD.DiqmK');
 
