@@ -45,7 +45,7 @@
       <div class="row">
         <?php
 		    $name=$_SESSION['name'];
-			echo "<h1>Welcome $name</h1>"
+			echo "<h1>Hear are your search results, $name</h1>"
 		?>
       </div>
       <!-- end title -->
@@ -71,11 +71,15 @@
 		if($mysqli->connect_errno){
 			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
 		}
-		//$query = "SELECT * FROM title";
-		//$result=$mysqli->query("$query");
-		//while($row=$result->fetch_assoc()){
-		//	echo '<img src="' . $row['ImageFile'] . '" alt="' . $row['Name'] . '" style="width:300px;height:500px;">';
-		//}
+		$query = "SELECT * FROM title WHERE Name LIKE '%" . $_POST['searchString'] . "%'";
+		if($result=$mysqli->query("$query")){
+			while($row=$result->fetch_assoc()){
+				echo '<div style="margin-top:50px;"> <img src="' . $row['ImageFile'] . 
+				'" alt="' . $row['Name'] . 
+				'" style="width:300px;height:500px;">' . 
+				$row['Name'] . '</div>';
+			}
+		}
       ?>
     </div>
 	  
