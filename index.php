@@ -29,6 +29,7 @@
             <li><a href="#">Help</a></li>
           </ul>
         </div>
+        </div>
       </div>
     </nav>
     <div class="container">

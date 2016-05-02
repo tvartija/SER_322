@@ -36,7 +36,9 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="welcome.php">Home</a></li>
             <li><a href="#">Help</a></li>
+            <li class="active"><a href="transaction.php">Transaction Log</a></li>
           </ul>
+        </div>
         </div>
       </div>
     </nav>
