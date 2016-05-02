@@ -19,7 +19,7 @@
 	$result=$mysqli->query("$query");
 	$row=$result->fetch_assoc();
 	if(password_verify("$userPassword",$row["Password"])){
-		echo $_SESSION['loggedin'];
+		//echo $_SESSION['loggedin'];
 		$_SESSION['loggedin']="YES";
 		$name=$row['Name'];
 		$_SESSION['name']="$name";

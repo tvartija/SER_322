@@ -45,7 +45,7 @@
       <div class="row">
         <?php
 		    $name=$_SESSION['name'];
-			echo "<h1>Hear are your search results, $name</h1>"
+			echo "<h1>Here are your search results, $name</h1>"
 		?>
       </div>
       <!-- end title -->
