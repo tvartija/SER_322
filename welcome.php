@@ -9,16 +9,29 @@
 
     <!-- connect to MySQL DB -->
     <?php
-		session_start();
-		if($_SESSION['loggedin']!="YES"){
-			echo "Successful login";
-			$_SESSION['name']="";
-			$url = "Location: index.php";
-			header("$url");
-			exit;
-		}
-	?>
-    
+  		session_start();
+  		if($_SESSION['loggedin']!="YES"){
+  			echo "Successful login";
+  			$_SESSION['name']="";
+  			$url = "Location: index.php";
+  			header("$url");
+  			exit;
+  		}
+
+      // Connect to DB
+      $user = 'book_inv_user';
+      $password = 'user123';
+      $db = 'book_inventory';
+      $host = 'localhost';
+      $port = 8889;
+
+      $mysqli = new mysqli("$host","$user","$password","$db","$port");
+      if($mysqli->connect_errno){
+        echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
+      }
+
+      $custID = $_SESSION['CustID'];
+  	?>
   </head>
   <body>
     <nav class="navbar navbar-inverse">
@@ -41,102 +54,122 @@
       </div>
     </nav>
     <div class="container">
+
+      <!-- Genre Sidebar -->
+      <div class="col-md-3" role="complementary">
+        <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" style="">
+          <h3>Browse By Genre</h3>
+          <ul class="nav bs-docs-sidenav">
+            <?php
+              $query = "SELECT * FROM genre";
+              $result=$mysqli->query("$query");
+
+              while($row=$result->fetch_assoc()) {
+            ?>
+              <li><a class="genre" genreID="<?php echo $row['GenreID']; ?>" href="javascript:void(0)"><?php echo $row['Name']; ?></a></li>
+            <?php } ?>
+          </ul>
+          <form style="display: none" action="genre.php" method="post" id='form'><input id="genre-form" type="hidden" name="genreID" /></form>
+        </nav>
+      </div>
+      <!-- end genre sidebar -->
+
       <!-- Page Title -->
-      <div class="row">
-        <?php
-		    $name=$_SESSION['name'];
-			echo "<h1>Welcome $name</h1>"
-		?>
-      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <?php
+  		    $name=$_SESSION['name'];
+  			echo "<h1>Welcome $name</h1>"
+  		?>
+        </div>
       <!-- end title -->
-	  <!-- Search form -->
-      <div class="row">
-        <form action="search.php" method="POST">
-          <label for="searchString">Search</label>
-          <div class="input-group">
-            <input type="textfield" class="form-control" id="searchString" name="searchString" placeholder="Search">
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-default">Search</button>
-            </span>
+
+  	  <!-- Search form -->
+        <div class="row">
+          <form action="search.php" method="POST">
+            <label for="searchString">Search</label>
+            <div class="input-group">
+              <input type="textfield" class="form-control" id="searchString" name="searchString" placeholder="Search">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">Search</button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <!-- end form -->
+
+      <!-- Display relative books -->
+  	  <?php
+        $query = "SELECT * FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND title.GenreID IN (SELECT genre.GenreID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')) AND book.ProductID NOT IN (SELECT book.ProductID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID'))";
+    		$result=$mysqli->query("$query");
+
+        // if no purchases display all books
+        if(mysqli_num_rows($result)==0) {
+          echo "<h2>Books for Sale:</h2>";
+          $query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID LIMIT 5";
+          $result=$mysqli->query("$query");
+        } else {
+          echo "<h2>Recommended Books from recent purchases:</h2>";
+        }
+      ?>
+        <?php
+          while($row=$result->fetch_assoc()) {
+        ?>
+          <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
+            <div class="col-md-6">
+              <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+            </div>
+            <div class="col-md-6">
+              <h4><?php echo $row['Name']; ?></h4>
+              <p class="help-block"><?php echo $row['Author']; ?></p>
+              <p class="help-block"><?php echo $row['Publisher']; ?></p>
+              <form action="purchase.php" method="POST">
+                <button type="submit" name="bookID" value="<?php echo $row['ProductID']; ?>" class="btn btn-success">Buy $<?php echo $row['Price']; ?></button>
+              </form>
+            </div>
           </div>
-        </form>
-      </div>
-      <!-- end form -->
-	  <?php
-  		$user = 'book_inv_user';
-  		$password = 'user123';
-  		$db = 'book_inventory';
-  		$host = 'localhost';
-  		$port = 8889;
+        <?php
+          }
+        ?>
+      <!-- end relative books -->
 
-  		$mysqli = new mysqli("$host","$user","$password","$db","$port");
-  		if($mysqli->connect_errno){
-  			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
-  		}
-
-      $custID = $_SESSION['CustID'];
-      $query = "SELECT * FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND title.GenreID IN (SELECT genre.GenreID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')) AND book.ProductID NOT IN (SELECT book.ProductID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID'))";
-  		$result=$mysqli->query("$query");
-
-      // if no purchases display all books
-      if(mysqli_num_rows($result)==0) {
-        echo "<h2>Books for Sale:</h2>";
-        $query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID LIMIT 5";
+      <!-- display recent purchases -->
+      <?php
+        $query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')";
         $result=$mysqli->query("$query");
-      } else {
-        echo "<h2>Recommended Books from recent purchases:</h2>";
-      }
-    ?>
-      <?php
-        while($row=$result->fetch_assoc()) {
-      ?>
-        <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
-          <div class="col-md-6">
-            <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
-          </div>
-          <div class="col-md-6">
-            <h4><?php echo $row['Name']; ?></h4>
-            <p class="help-block"><?php echo $row['Author']; ?></p>
-            <p class="help-block"><?php echo $row['Publisher']; ?></p>
-            <form action="purchase.php" method="POST">
-              <button type="submit" name="bookID" value="<?php echo $row['ProductID']; ?>" class="btn btn-success">Buy $<?php echo $row['Price']; ?></button>
-            </form>
-          </div>
-        </div>
-      <?php
-        }
-      ?>
 
-    <?php
-      $query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')";
-      $result=$mysqli->query("$query");
-
-      // if no purchases display all books
-      if(mysqli_num_rows($result)==0) {
-      } else {
-        echo "<h2 style='margin-top: 30px;'>Recent purchases:</h2>";
-    ?>
-      <?php
-        while($row=$result->fetch_assoc()) {
+        // if no purchases display all books
+        if(mysqli_num_rows($result)==0) {
+        } else {
+          echo "<h2 style='margin-top: 30px;'>Recent purchases:</h2>";
       ?>
-        <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
-          <div class="col-md-6">
-            <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+        <?php
+          while($row=$result->fetch_assoc()) {
+        ?>
+          <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
+            <div class="col-md-6">
+              <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+            </div>
+            <div class="col-md-6">
+              <h4><?php echo $row['Name']; ?></h4>
+              <p class="help-block"><?php echo $row['Author']; ?></p>
+              <p class="help-block"><?php echo $row['Publisher']; ?></p>
+              <p class="help-block">Purchased for: $<?php echo $row['Price']; ?></p>
+            </div>
           </div>
-          <div class="col-md-6">
-            <h4><?php echo $row['Name']; ?></h4>
-            <p class="help-block"><?php echo $row['Author']; ?></p>
-            <p class="help-block"><?php echo $row['Publisher']; ?></p>
-            <p class="help-block">Purchased for: $<?php echo $row['Price']; ?></p>
-          </div>
-        </div>
-      <?php
+        <?php
+          }
         }
-      }
-      ?>
-      
+        ?>
+        <!-- end recent purchase -->
+      </div>
     </div>
-	  
 
+    <script>
+      $(".genre").click(function (e) {
+          $("#genre-form").val($(this).attr('genreID'));
+          $("#form").submit();
+      });
+    </script>
   </body>
 </html>
