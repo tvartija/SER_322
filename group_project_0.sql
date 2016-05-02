@@ -23,6 +23,7 @@ Author VARCHAR(30),
 Publisher VARCHAR(30), 
 PubYear Date,
 GenreID INT,
+ImageFile VARCHAR(80),
 PRIMARY KEY (ISBN),
 FOREIGN KEY (GenreID) REFERENCES book_inventory.genre(GenreID),
 UNIQUE (TitleID)
@@ -76,19 +77,19 @@ INSERT INTO book_inventory.genre VALUE('Teen Fiction', 8);
 INSERT INTO book_inventory.genre VALUE('Children', 9);
 
 INSERT INTO book_inventory.title VALUE(9780590453653, 
-0000000001,'Welcome to Dead House', 'R.L. Stine', 'Scholastic', "1992-07-01", 1);
+0000000001,'Welcome to Dead House', 'R.L. Stine', 'Scholastic', "1992-07-01", 1, 'images\\books\\welcometodeadhouse.jpg');
 
 INSERT INTO book_inventory.title VALUE(9780590453661, 
-0000000002,'Stay Out of The Basement', 'R.L. Stine', 'Scholastic', "1992-07-01", 1);
+0000000002,'Stay Out of The Basement', 'R.L. Stine', 'Scholastic', "1992-07-01", 1,'images\\books\\stayoutofthebasement.jpg');
 
 INSERT INTO book_inventory.title VALUE(9780590477412, 
-0000000003,'Deep Trouble', 'R.L. Stine', 'Scholastic', "1994-05-01", 1);
+0000000003,'Deep Trouble', 'R.L. Stine', 'Scholastic', "1994-05-01", 1,'images\\books\\deeptrouble.jpg');
 
 INSERT INTO book_inventory.title VALUE(9780425240335, 
-0000000004,'The Hunt for Red October', 'Tom Clancy', 'Berkley Books', "1984-10-01", 7);
+0000000004,'The Hunt for Red October', 'Tom Clancy', 'Berkley Books', "1984-10-01", 7,'images\\books\\thehuntforredoctober.jpg');
 
 INSERT INTO book_inventory.title VALUE(9780425170349, 
-0000000005,'Rainbow Six', 'Tom Clancy', 'Berkley Books', "1998-08-01", 7);
+0000000005,'Rainbow Six', 'Tom Clancy', 'Berkley Books', "1998-08-01", 7, 'images\\books\\rainbowsix.jpg');
 
 INSERT INTO book_inventory.book VALUE(null,5,2,0000000001,9.99);
 INSERT INTO book_inventory.book VALUE(null,1,2,0000000002,9.99);

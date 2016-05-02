@@ -17,20 +17,7 @@
 			header("$url");
 			exit;
 		}
-		$user = 'root';
-		$password = 'root';
-		$db = 'book_inventory';
-		$host = 'localhost';
-		$port = 8889;
-
-		$mysqli = new mysqli("$host","$user","$password","$db","$port");
-		if($mysqli->connect_errno){
-			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
-		}
-		$query = "SELECT * FROM book";
-		$result=$mysqli->query("$query");
-      
-    ?>
+	?>
     
   </head>
   <body>
@@ -62,8 +49,24 @@
 		?>
       </div>
       <!-- end title -->
-
-
     </div>
+	
+	<?php
+		$user = 'root';
+		$password = 'root';
+		$db = 'book_inventory';
+		$host = 'localhost';
+		$port = 8889;
+
+		$mysqli = new mysqli("$host","$user","$password","$db","$port");
+		if($mysqli->connect_errno){
+			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
+		}
+		$query = "SELECT * FROM title";
+		$result=$mysqli->query("$query");
+		while($row=$result->fetch_assoc()){
+			echo '<img src="' . $row['ImageFile'] . '" alt="' . $row['Name'] . '" style="width:300px;height:500px;">';
+		}
+    ?>
   </body>
 </html>
