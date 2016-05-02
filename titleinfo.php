@@ -71,18 +71,22 @@
 		if($mysqli->connect_errno){
 			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
 		}
-		$query = "SELECT * FROM title WHERE Name LIKE '%" . $_POST['searchString'] . "%'";
+		$query = "SELECT * FROM title WHERE TitleID LIKE '%" . $_POST['TitleID'] . "%'";
 		if($result=$mysqli->query("$query")){
-			while($row=$result->fetch_assoc()){
-				$thisform='<form action="titleinfo.php" method="POST">' .
-							'<input type="hidden" name="TitleID" value=' . $row["TitleID"] . '>' .
-							'<button type="submit" class="btn btn-default">View this title</button>' .
-							'</form>';
-				echo '<div style="margin-top:50px;"> <img src="' . $row['ImageFile'] . 
-				'" alt="' . $row['Name'] . 
-				'" style="width:150px;height:250px;">' . 
-				$row['Name'] . "$thisform" . '</div>';
+			$row=$result->fetch_assoc();
+			echo '<div style="margin-top:50px;"> <img src="' . $row['ImageFile'] . 
+			'" alt="' . $row['Name'] . 
+			'" style="width:150px;height:250px;">' . 
+			'</div><div>ISBN: ' . $row['ISBN'] . ', Name: ' . $row['Name'] . 
+			', Author:' . $row['Author'] . ', Publisher: ' . $row['Publisher'] .
+			', Pubication Year: ' . $row['PubYear'];
+			
+			$query = "SELECT Name FROM Genre WHERE GenreID = " . $row['GenreID'];
+			if($result=$mysqli->query("$query")){
+				$row=$result->fetch_assoc();
+				echo ', Genre: ' . $row['Name'];
 			}
+			echo '</div>';
 		}
       ?>
     </div>
