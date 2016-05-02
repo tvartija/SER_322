@@ -61,8 +61,8 @@
       </div>
       <!-- end form -->
 	  <?php
-		$user = 'root';
-		$password = 'root';
+		$user = 'book_inv_user';
+		$password = 'user123';
 		$db = 'book_inventory';
 		$host = 'localhost';
 		$port = 8889;

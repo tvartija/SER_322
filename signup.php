@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	$user = 'root';
-	$password = 'root';
+	$user = 'book_inv_user';
+	$password = 'user123';
 	$db = 'book_inventory';
 	$host = 'localhost';
 	$port = 8889;
