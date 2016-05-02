@@ -23,6 +23,7 @@
 		$_SESSION['loggedin']="YES";
 		$name=$row['Name'];
 		$_SESSION['name']="$name";
+		$_SESSION['CustID'] = $row["CustID"];
 		$url = "Location: welcome.php";
 		header("$url");
 		exit;

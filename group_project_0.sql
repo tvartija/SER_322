@@ -62,8 +62,10 @@ PurchaseDate DATE,
 Qty INT,
 PurchasePrice DECIMAL(10,2),
 ProductID BIGINT(10),
+CustID  BIGINT(20),
 PRIMARY KEY (TransactionID),
-FOREIGN KEY (ProductID) REFERENCES book_inventory.book(ProductID)
+FOREIGN KEY (ProductID) REFERENCES book_inventory.book(ProductID),
+FOREIGN KEY (CustID) REFERENCES book_inventory.consumer(CustID)
 );
 
 INSERT INTO book_inventory.genre VALUE('Horror', 1);
