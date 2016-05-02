@@ -94,17 +94,25 @@
       $query = "SELECT * FROM genre, title WHERE genre.GenreID='" . $_POST['genreID'] . "' AND genre.GenreID = title.GenreID";
       if($result=$mysqli->query("$query")){
         while($row=$result->fetch_assoc()){
-          $thisform='<form action="titleinfo.php" method="POST">' .
-                '<input type="hidden" name="TitleID" value=' . $row["TitleID"] . '>' .
-                '<button type="submit" class="btn btn-default">View this title</button>' .
-                '</form>';
-          echo '<div style="margin-top:50px;"> <img src="' . $row['ImageFile'] . 
-          '" alt="' . $row['Name'] . 
-          '" style="width:150px;height:250px;">' . 
-          $row['Name'] . "$thisform" . '</div>';
+      ?>
+        <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
+            <div class="col-md-6">
+              <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+            </div>
+            <div class="col-md-6">
+              <h4><?php echo $row['Name']; ?></h4>
+              <p class="help-block"><?php echo $row['Author']; ?></p>
+              <p class="help-block"><?php echo $row['Publisher']; ?></p>
+              <form action="titleinfo.php" method="POST">
+                <input type="hidden" name="TitleID" value='<?php $row["TitleID"] ?>'>
+                <button type="submit" class="btn btn-default">View this title</button>
+              </form>
+            </div>
+          </div>
+      <?php
         }
       }
-        ?>
+      ?>
       </div>
     </div>
 
