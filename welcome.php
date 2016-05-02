@@ -63,20 +63,30 @@
       </div>
       <!-- end form -->
 	  <?php
-		$user = 'book_inv_user';
-		$password = 'user123';
-		$db = 'book_inventory';
-		$host = 'localhost';
-		$port = 8889;
+  		$user = 'book_inv_user';
+  		$password = 'user123';
+  		$db = 'book_inventory';
+  		$host = 'localhost';
+  		$port = 8889;
 
-		$mysqli = new mysqli("$host","$user","$password","$db","$port");
-		if($mysqli->connect_errno){
-			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
-		}
-		$query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID LIMIT 4";
-		$result=$mysqli->query("$query");
-    
-      ?>
+  		$mysqli = new mysqli("$host","$user","$password","$db","$port");
+  		if($mysqli->connect_errno){
+  			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
+  		}
+
+      $custID = $_SESSION['CustID'];
+      $query = "SELECT * FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND title.GenreID IN (SELECT genre.GenreID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')) AND book.ProductID NOT IN (SELECT book.ProductID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID'))";
+  		$result=$mysqli->query("$query");
+
+      // if no purchases display all books
+      if(mysqli_num_rows($result)==0) {
+        echo "<h2>Books for Sale:</h2>";
+        $query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID LIMIT 5";
+        $result=$mysqli->query("$query");
+      } else {
+        echo "<h2>Recommended Books from recent purchases:</h2>";
+      }
+    ?>
       <?php
         while($row=$result->fetch_assoc()) {
       ?>
