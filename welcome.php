@@ -106,6 +106,34 @@
       <?php
         }
       ?>
+
+    <?php
+      $query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')";
+      $result=$mysqli->query("$query");
+
+      // if no purchases display all books
+      if(mysqli_num_rows($result)==0) {
+      } else {
+        echo "<h2 style='margin-top: 30px;'>Recent purchases:</h2>";
+    ?>
+      <?php
+        while($row=$result->fetch_assoc()) {
+      ?>
+        <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
+          <div class="col-md-6">
+            <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+          </div>
+          <div class="col-md-6">
+            <h4><?php echo $row['Name']; ?></h4>
+            <p class="help-block"><?php echo $row['Author']; ?></p>
+            <p class="help-block"><?php echo $row['Publisher']; ?></p>
+            <p class="help-block">Purchased for: $<?php echo $row['Price']; ?></p>
+          </div>
+        </div>
+      <?php
+        }
+      }
+      ?>
       
     </div>
 	  
