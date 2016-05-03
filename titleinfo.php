@@ -65,7 +65,7 @@
 		$password = 'user123';
 		$db = 'book_inventory';
 		$host = 'localhost';
-		$port = 3306;
+		$port = 8889;
 
 		$mysqli = new mysqli("$host","$user","$password","$db","$port");
 		if($mysqli->connect_errno){
