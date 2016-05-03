@@ -57,7 +57,7 @@ UNIQUE(Email)
 
 CREATE TABLE IF NOT EXISTS book_inventory.transactions
 (
-TransactionID INT,
+TransactionID INT AUTO_INCREMENT,
 PurchaseDate DATE,
 Qty INT,
 PurchasePrice DECIMAL(10,2),

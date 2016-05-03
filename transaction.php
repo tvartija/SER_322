@@ -65,37 +65,41 @@
 		if($mysqli->connect_errno){
 			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
 		}
-		$query = "SELECT * FROM transactions WHERE CustID = $_SESSION['CustID']}";
-		if($result=$mysqli->query("$query")){
-			echo <'table align="left" cellspacing="5" cellpadding="8">;
-			<tr><td align="left"><b>CustID</b></td>
-			<td align="left"><b>ProductID</b></td>
-			<td align="left"><b>PurchaseDate</b></td>
-			<td align="left"><b>PurchasePrice</b></td>
-			<td align="left"><b>Qty</b></td>
-			<td align="left"><b>TransactionID</b></td></tr>';
-			
-			while($row = mysqli_fetch_array($result)){
-				echo '<tr><td align="left">' .
-				$row['CustID'] . '</td><td align="left">'.
-				$row['ProductID'] . '</td><td align="left">'.
-				$row['PurchaseDate'] . '</td><td align="left">'.
-				$row['PurchasePrice'] . '</td><td align="left">'.
-				$row['Qty'] . '</td><td align="left">'.
-				$row['TransactionID'] . '</td><td align="left">';
-				
-				echo '</tr>';
-			}
-			
-			echo '</table>';
-			
-			
-		} else {
-			echo "Transaction Log search failed.";
-		}
+		$query = "SELECT * FROM transactions WHERE CustID = {$_SESSION['CustID']}";
 		
+		$result=$mysqli->query("$query");		
 		
       ?>
+	  <!--Transaction table-->      <div class="row">
+        <table class="table table-bordered table-hover">
+          <thead>
+			<?php
+				while($finfo = $result->fetch_field()){
+					$column_name=$finfo->name;
+					echo( "<td>$column_name</td>" );
+				}
+			?>
+          </thead>
+          <tbody>
+            <?php
+              // fetch each record in result set
+              // Loop through each row in DB
+              for ( $counter = 0; $row = $result->fetch_row();
+                $counter++ )
+              {
+                // build table to display results
+                echo( "<tr>" );
+
+                // Loop through each column
+                foreach ( $row as $key => $value )
+                  echo( "<td>$value</td>" );
+
+                echo( "</tr>" );
+              } // end for
+            ?><!-- end PHP script -->
+          </tbody>
+        </table>
+      </div>
     </div>
 	  
 
