@@ -68,6 +68,17 @@ FOREIGN KEY (ProductID) REFERENCES book_inventory.book(ProductID),
 FOREIGN KEY (CustID) REFERENCES book_inventory.consumer(CustID)
 );
 
+CREATE TABLE IF NOT EXISTS book_inventory.employee
+(
+EmpID BIGINT AUTO_INCREMENT,
+DriversLicense BIGINT,
+Name VARCHAR(30),
+Address VARCHAR(40),
+Email VARCHAR(30),
+Password VARCHAR(70),
+PRIMARY KEY (EmpID)
+);
+
 INSERT INTO book_inventory.genre VALUE('Horror', 1);
 INSERT INTO book_inventory.genre VALUE('Romance', 2);
 INSERT INTO book_inventory.genre VALUE('Sci-fi / Fantasy', 3);
@@ -103,3 +114,6 @@ INSERT INTO book_inventory.consumer VALUE(123654789,null,'Roger Wilco','123 Main
 INSERT INTO book_inventory.consumer VALUE(165487111,null,'Larry Loveless','500 32nd Way','P.O. Box 223','leisuresuit@yahoo.com','$2y$10$954oHaZjALfaLb.XGrr71uoxLD2o0KtI2XhuSIxSI9Vw9meXdSxc.');
 INSERT INTO book_inventory.consumer VALUE(888792114,null,'Duke Nukem','453 Post Apocalyptic St.','33 Planet Gone Circle','rocketlaunch@live.com','$2y$10$EvAWCabRE9PMfVg9Jw0uou2e4jHWqQvMURotiS9bWO/3bjD.DiqmK');
 
+INSERT INTO book_inventory.employee VALUE(000001,123456789,'Bob Dylan','789 Consecutive Number St.', 'bdylan@bing.com','$2y$10$pgB4fOq/DPuHJEeKsdt5muvRzDvLMsRh1GP3XKuseTYm7..BOLKrW');
+INSERT INTO book_inventory.employee VALUE(000002,888888888,'Tim Cohen','111 Random Dr.', 'email@email.com','$2y$10$pgB4fOq/DPuHJEeKsdt5muvRzDvLMsRh1GP3XKuseTYm7..BOLKrW');
+INSERT INTO book_inventory.employee VALUE(000003,999999999,'Mike Downs','69 Fast Lane', 'yahoosucks@gmail.com','$2y$10$pgB4fOq/DPuHJEeKsdt5muvRzDvLMsRh1GP3XKuseTYm7..BOLKrW');

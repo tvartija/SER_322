@@ -29,7 +29,7 @@
             <li><a href="#">Help</a></li>
           </ul>
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="employeeloginportal.php">Employee Login</a></li>
+			<li><a href="#">Employee Login</a></li>
 		</ul>
         </div>
         </div>
@@ -38,20 +38,20 @@
     <div class="container">
       <!-- Page Title -->
       <div class="row">
-        <h1>Enter Login Information</h1>
+        <h1>Enter Employee Login Information</h1>
       </div>
       <!-- end title -->
 
       <!-- Login form -->
       <div class="row">
-        <form action="login.php" method="POST">
+        <form action="employeelogin.php" method="POST">
           <div class="form-group">
-            <label for="userEmail">Email address</label>
-            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email">
+            <label for="empEmail">Email address</label>
+            <input type="email" class="form-control" id="empEmail" name="empEmail" placeholder="Email">
           </div>
           <div class="form-group">
-            <label for="userPassword">Password</label>
-            <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
+            <label for="empPassword">Password</label>
+            <input type="password" class="form-control" id="empPassword" name="empPassword" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
@@ -60,7 +60,7 @@
 	  
 	  <!-- Setup Account -->
       <div class="row">
-        <h1>Setup Account</h1>
+        <h1>New Employee Account</h1>
       </div>
       <!-- end title -->
 
@@ -72,24 +72,20 @@
             <input type="textfield" class="form-control" id="userName" name="userName" placeholder="Name">
           </div>
 		  <div class="form-group">
-            <label for="userShippingAddress">Shipping Address</label>
+            <label for="userShippingAddress">Address</label>
             <input type="textfield" class="form-control" id="userShippingAddress" name="userShippingAddress" placeholder="Shipping Address">
-          </div>
-		  <div class="form-group">
-            <label for="userBillingAddress">Billing Address</label>
-            <input type="textfield" class="form-control" id="userBillingAddress" name="userBillingAddress" placeholder="Billing Address">
           </div>
 		  <div class="form-group">
             <label for="userDriversLicense">Drivers License</label>
             <input type="textfield" class="form-control" id="userDriversLicense" name="userDriversLicense" placeholder="Drivers License">
           </div>
           <div class="form-group">
-            <label for="userEmail">Email address</label>
-            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email">
+            <label for="empEmail">Email address</label>
+            <input type="email" class="form-control" id="empEmail" name="empEmail" placeholder="Email">
           </div>
           <div class="form-group">
-            <label for="userPassword">Password</label>
-            <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
+            <label for="empPassword">Password</label>
+            <input type="password" class="form-control" id="empPassword" name="empPassword" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
