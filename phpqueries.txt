@@ -1,0 +1,27 @@
+$query = "INSERT INTO title (ISBN, TitleID, Name, Author, Publisher, PubYear, GenreID, ImageFile) VALUES ('" . rand() . "', '". $titleID . "', '" .$_POST['bookName'] ."', '" . $_POST['author'] ."', '". $_POST['publisher'] ."', '". $_POST['publishYear'] . "', '". $_POST['genreID'] ."', '". $_POST['imgLink']."')"
+
+$query = "INSERT INTO book (Stock, Edition, TitleID, Price) VALUES ('10', '1', '". $titleID."', '". $_POST['price'] ."')"
+
+$query = "SELECT * FROM genre";
+
+$query = "SELECT * FROM employee WHERE Email='$empEmail'";
+
+$query = "INSERT INTO employee (DriversLicense, Name, Address, Email, Password)
+
+$query = "SELECT title.Name as bookName, genre.*, title.*, book.* FROM genre, title, book WHERE genre.GenreID='" . $_POST['genreID'] . "' AND genre.GenreID = title.GenreID AND title.TitleID = book.TitleID";
+
+$query = "SELECT * FROM consumer WHERE Email='$userEmail'";
+
+$query = "INSERT INTO transactions (PurchaseDate, Qty, PurchasePrice, ProductID, CustID) VALUES ('" . date("Y-m-d") . "', '1','". $row['Price'] ."','". $_POST['bookID'] . "','" . $_SESSION['CustID'] . "')";
+
+$query = "SELECT * FROM title, book WHERE Name LIKE '%" . $_POST['searchString'] . "%' AND title.TitleID = book.TitleID";
+
+$query = "INSERT INTO Consumer (DriversLicense,Name,ShippingAddress,BillingAddress,Email,Password) VALUES($userDriversLicense,'$userName','$userShippingAddress','$userBillingAddress','$userEmail','$userPassword')";
+
+$query = "SELECT * FROM title, book WHERE title.TitleID = '" . $_POST['TitleID'] . "' AND title.TitleID = book.TitleID";
+
+$query = "SELECT * FROM transactions WHERE CustID = {$_SESSION['CustID']}";
+
+$query = "SELECT title.Name as bookName, title.*, book.*, genre.* FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND title.GenreID IN (SELECT genre.GenreID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')) AND book.ProductID NOT IN (SELECT book.ProductID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID'))";
+
+$query = "SELECT * FROM title, book WHERE title.TitleID = book.TitleID LIMIT 5";
