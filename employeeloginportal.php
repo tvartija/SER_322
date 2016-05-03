@@ -66,18 +66,18 @@
 
       <!-- Login form -->
       <div class="row">
-        <form action="signup.php" method="POST">
+        <form action="employeesignup.php" method="POST">
 		  <div class="form-group">
-            <label for="userName">Name</label>
-            <input type="textfield" class="form-control" id="userName" name="userName" placeholder="Name">
+            <label for="empName">Name</label>
+            <input type="textfield" class="form-control" id="empName" name="empName" placeholder="Name">
           </div>
 		  <div class="form-group">
-            <label for="userShippingAddress">Address</label>
-            <input type="textfield" class="form-control" id="userShippingAddress" name="userShippingAddress" placeholder="Shipping Address">
+            <label for="empAddress">Address</label>
+            <input type="textfield" class="form-control" id="empAddress" name="empAddress" placeholder="Address">
           </div>
 		  <div class="form-group">
-            <label for="userDriversLicense">Drivers License</label>
-            <input type="textfield" class="form-control" id="userDriversLicense" name="userDriversLicense" placeholder="Drivers License">
+            <label for="empDriversLicense">Drivers License</label>
+            <input type="textfield" class="form-control" id="empDriversLicense" name="empDriversLicense" placeholder="Drivers License">
           </div>
           <div class="form-group">
             <label for="empEmail">Email address</label>
