@@ -17,6 +17,17 @@
 			header("$url");
 			exit;
 		}
+
+    $user = 'book_inv_user';
+    $password = 'user123';
+    $db = 'book_inventory';
+    $host = 'localhost';
+    $port = 8889;
+
+    $mysqli = new mysqli("$host","$user","$password","$db","$port");
+    if($mysqli->connect_errno){
+      echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
+    }
 	?>
     
   </head>
@@ -43,60 +54,81 @@
       </div>
     </nav>
     <div class="container">
-      <!-- Page Title -->
-      <div class="row">
-        <?php
-		    $name=$_SESSION['name'];
-			echo "<h1>Here are your search results, $name</h1>"
-		?>
-      </div>
-      <!-- end title -->
-	  <!-- Search form -->
-      <div class="row">
-        <form action="search.php" method="POST">
-          <div class="form-group">
-            <label for="searchString">Search</label>
-            <input type="textfield" class="form-control" id="searchString" name="searchString" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">Search</button>
-        </form>
-      </div>
-      <!-- end form -->
-	  <?php
-		$user = 'book_inv_user';
-		$password = 'user123';
-		$db = 'book_inventory';
-		$host = 'localhost';
-		$port = 8889;
+      <div class="col-md-3" role="complementary">
+        <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" style="">
+          <h3>Browse By Genre</h3>
+          <ul class="nav bs-docs-sidenav">
+            <?php
+              $query = "SELECT * FROM genre";
+              $result=$mysqli->query("$query");
 
-		$mysqli = new mysqli("$host","$user","$password","$db","$port");
-		if($mysqli->connect_errno){
-			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
-		}
-		$query = "SELECT * FROM title WHERE Name LIKE '%" . $_POST['searchString'] . "%'";
-		if($result=$mysqli->query("$query")){
-			while($row=$result->fetch_assoc()){
-      ?>
-        <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
-            <div class="col-md-6">
-              <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+              while($row=$result->fetch_assoc()) {
+            ?>
+              <li><a class="genre" genreID="<?php echo $row['GenreID']; ?>" href="javascript:void(0)"><?php echo $row['Name']; ?></a></li>
+            <?php } ?>
+          </ul>
+          <form style="display: none" action="genre.php" method="post" id='form'><input id="genre-form" type="hidden" name="genreID" /></form>
+        </nav>
+      </div>
+      <!-- end genre sidebar -->
+
+      <!-- Page Title -->
+      <div class="col-md-6">
+        <div class="row">
+          <?php
+  		    $name=$_SESSION['name'];
+  			echo "<h1>Here are your search results, $name</h1>"
+  		?>
+        </div>
+        <!-- end title -->
+  	  <!-- Search form -->
+        <div class="row">
+          <form action="search.php" method="POST">
+            <label for="searchString">Search</label>
+            <div class="input-group">
+              <input type="textfield" class="form-control" id="searchString" name="searchString" placeholder="Search">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">Search</button>
+              </span>
             </div>
-            <div class="col-md-6">
-              <h4><?php echo $row['Name']; ?></h4>
-              <p class="help-block"><?php echo $row['Author']; ?></p>
-              <p class="help-block"><?php echo $row['Publisher']; ?></p>
-              <form action="titleinfo.php" method="POST">
-                <input type="hidden" name="TitleID" value='<?php $row["TitleID"] ?>'>
-                <button type="submit" class="btn btn-default">View this title</button>
+          </form>
+        </div>
+        <!-- end form -->
+  	  <?php
+  		
+  		$query = "SELECT * FROM title, book WHERE Name LIKE '%" . $_POST['searchString'] . "%' AND title.TitleID = book.TitleID";
+  		if($result=$mysqli->query("$query")){
+  			while($row=$result->fetch_assoc()){
+        ?>
+          <div class="row" style="margin-top: 25px; border-bottom: 1px solid #ccc; padding: 15px">
+              <div class="col-md-6">
+                <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
+              </div>
+              <div class="col-md-6">
+                <h4><?php echo $row['Name']; ?></h4>
+                <p class="help-block"><?php echo $row['Author']; ?></p>
+                <p class="help-block"><?php echo $row['Publisher']; ?></p>
+                <form action="titleinfo.php" method="POST">
+                  <input type="hidden" name="TitleID" value='<?php echo $row["TitleID"]; ?>'>
+                  <button type="submit" class="btn btn-default">View this title</button>
+                </form>
+                <form action="purchase.php" method="POST">
+                <button type="submit" name="bookID" value="<?php echo $row['ProductID']; ?>" class="btn btn-success">Buy $<?php echo $row['Price']; ?></button>
               </form>
+              </div>
             </div>
-          </div>
-      <?php
+        <?php
+          }
         }
-      }
-      ?>
+        ?>
+      </div>
     </div>
-	  
+	  <script>
+      $(".genre").click(function (e) {
+          $("#genre-form").val($(this).attr('genreID'));
+          $("#form").submit();
+      });
+    </script>
 
   </body>
 </html>
