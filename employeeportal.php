@@ -65,6 +65,7 @@
   		    $name=$_SESSION['name'];
   			echo "<h1>Welcome $name</h1>"
   		?>
+      <button class="btn btn-danger" href="employeeAddBook.php"><a style="color: white;" href="employeeAddBook.php">Add Book</a></button>
         </div>
       <!-- end title -->
 
