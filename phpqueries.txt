@@ -6,7 +6,7 @@ $query = "SELECT * FROM genre";
 
 $query = "SELECT * FROM employee WHERE Email='$empEmail'";
 
-$query = "INSERT INTO employee (DriversLicense, Name, Address, Email, Password)
+$query = "INSERT INTO employee (DriversLicense, Name, Address, Email, Password) VALUES($empDriversLicense,'$empName','$empAddress','$empEmail','$empPassword')";
 
 $query = "SELECT title.Name as bookName, genre.*, title.*, book.* FROM genre, title, book WHERE genre.GenreID='" . $_POST['genreID'] . "' AND genre.GenreID = title.GenreID AND title.TitleID = book.TitleID";
 
