@@ -48,6 +48,9 @@
             <li class="active"><a href="welcome.php">Home</a></li>
             <li><a href="#">Help</a></li>
           </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="Llgout.php">Logout</a></li>
+		  </ul>
         </div>
       </div>
     </nav>

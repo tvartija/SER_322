@@ -10,7 +10,7 @@
     <!-- connect to MySQL DB -->
     <?php
   		session_start();
-  		if($_SESSION['loggedin']!="YES"){
+  		if($_SESSION['emploggedin']!="YES"){
   			echo "Successful login";
   			$_SESSION['name']="";
   			$url = "Location: index.php";
@@ -49,7 +49,6 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="welcome.php">Home</a></li>
             <li><a href="#">Help</a></li>
-            <li class="active"><a href="transaction.php">Transaction Log</a></li>
           </ul>
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="logout.php">Logout</a></li>
@@ -58,25 +57,6 @@
       </div>
     </nav>
     <div class="container">
-
-      <!-- Genre Sidebar -->
-      <div class="col-md-3" role="complementary">
-        <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" style="">
-          <h3>Browse By Genre</h3>
-          <ul class="nav bs-docs-sidenav">
-            <?php
-              $query = "SELECT * FROM genre";
-              $result=$mysqli->query("$query");
-
-              while($row=$result->fetch_assoc()) {
-            ?>
-              <li><a class="genre" genreID="<?php echo $row['GenreID']; ?>" href="javascript:void(0)"><?php echo $row['Name']; ?></a></li>
-            <?php } ?>
-          </ul>
-          <form style="display: none" action="genre.php" method="post" id='form'><input id="genre-form" type="hidden" name="genreID" /></form>
-        </nav>
-      </div>
-      <!-- end genre sidebar -->
 
       <!-- Page Title -->
       <div class="col-md-6">
@@ -104,7 +84,7 @@
 
       <!-- Display relative books -->
   	  <?php
-        $query = "SELECT title.Name as bookName, title.*, book.*, genre.* FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND title.GenreID IN (SELECT genre.GenreID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')) AND book.ProductID NOT IN (SELECT book.ProductID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID'))";
+        $query = "SELECT * FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND title.GenreID IN (SELECT genre.GenreID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID')) AND book.ProductID NOT IN (SELECT book.ProductID FROM title, book, genre WHERE title.TitleID = book.TitleID AND title.GenreID = genre.GenreID AND book.ProductID IN (SELECT ProductID FROM transactions WHERE CustID='$custID'))";
     		$result=$mysqli->query("$query");
 
         // if no purchases display all books
@@ -124,13 +104,9 @@
               <?php echo '<img style="max-width: 150px; heigh: auto;" src="'. $row['ImageFile'] . '" alt="' . $row['Name'] . '">'; ?>
             </div>
             <div class="col-md-6">
-              <h4><?php echo $row['bookName']; ?></h4>
+              <h4><?php echo $row['Name']; ?></h4>
               <p class="help-block"><?php echo $row['Author']; ?></p>
               <p class="help-block"><?php echo $row['Publisher']; ?></p>
-              <form action="titleinfo.php" method="POST">
-                <input type="hidden" name="TitleID" value='<?php echo $row["TitleID"]; ?>'>
-                <button type="submit" class="btn btn-default">View this title</button>
-              </form>
               <form action="purchase.php" method="POST">
                 <button type="submit" name="bookID" value="<?php echo $row['ProductID']; ?>" class="btn btn-success">Buy $<?php echo $row['Price']; ?></button>
               </form>
@@ -173,11 +149,5 @@
       </div>
     </div>
 
-    <script>
-      $(".genre").click(function (e) {
-          $("#genre-form").val($(this).attr('genreID'));
-          $("#form").submit();
-      });
-    </script>
   </body>
 </html>

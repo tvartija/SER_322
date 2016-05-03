@@ -38,6 +38,9 @@
             <li><a href="#">Help</a></li>
             <li class="active"><a href="transaction.php">Transaction Log</a></li>
           </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="logout.php">Logout</a></li>
+		  </ul>
         </div>
         </div>
       </div>
@@ -62,7 +65,7 @@
 		if($mysqli->connect_errno){
 			echo "Connection to MySQL failed: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error; 
 		}
-		$query = "SELECT * FROM transactions WHERE CustID = $_SESSION['CustID']} " ;
+		$query = "SELECT * FROM transactions WHERE CustID = $_SESSION['CustID']}";
 		if($result=$mysqli->query("$query")){
 			echo <'table align="left" cellspacing="5" cellpadding="8">;
 			<tr><td align="left"><b>CustID</b></td>

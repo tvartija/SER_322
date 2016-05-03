@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <?php
 	session_start();
+	if($_SESSION['emploggedin']=='YES'){
+		$url = "Location: employeeportal.php";
+		header("$url");
+		exit;
+	}
+	if($_SESSION['loggedin']=='YES'){
+		$url = "Location: welcome.php";
+		header("$url");
+		exit;
+	}
 ?>
 <html>
   <head>
@@ -30,7 +40,7 @@
           </ul>
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="employeeloginportal.php">Employee Login</a></li>
-		</ul>
+		  </ul>
         </div>
         </div>
       </div>

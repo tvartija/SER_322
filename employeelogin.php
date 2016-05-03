@@ -22,10 +22,11 @@
 	if(password_verify("$empPassword",$row["Password"])){
 		//echo $_SESSION['loggedin'];
 		$_SESSION['loggedin']="YES";
+		$_SESSION['emploggedin'] = "YES";
 		$name=$row['Name'];
 		$_SESSION['name']="$name";
 		$_SESSION['EmpID'] = $row["EmpID"];
-		$url = "Location: welcome.php";
+		$url = "Location: employeeportal.php";
 		header("$url");
 		exit;
 	}

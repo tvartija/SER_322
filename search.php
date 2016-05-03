@@ -49,6 +49,9 @@
             <li><a href="#">Help</a></li>
             <li class="active"><a href="transaction.php">Transaction Log</a></li>
           </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="logout.php">Logout</a></li>
+		  </ul>
         </div>
         </div>
       </div>
